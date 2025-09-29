@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <title>Application Form</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: "Noto Sans Myanmar", sans-serif;
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    h2 { text-align: center; }
+    label { display: block; margin-top: 15px; }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #0066cc;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover { background: #004999; }
+  </style>
+</head>
+<body>
+  <h2>အသုံးပြုမည့် လျှောက်လွှာပုံစံ</h2>
+
+  <form id="appForm">
+    <label>ဘွဲ့တော်<input type="text" id="degree"></label>
+    <label>သက္ကရာဇ်<input type="text" id="year"></label>
+    <label>ဝမ်းတော်<input type="text" id="father"></label>
+    <label>သစ်သနဝင်အမည်<input type="text" id="ordinationName"></label>
+    <label>မွေးသက္ကရာဇ်<input type="text" id="birth"></label>
+    <label>ဥပဇ္ဈာယ၏ ဘွဲ့တော်<input type="text" id="upaDegree"></label>
+    <label>ရဟန်းဖဆင့်သည့် နေရာ<input type="text" id="place"></label>
+    <label>ရဟန်းဖဆင့်သည့် သက္ကရာဇ်<input type="text" id="ordinationYear"></label>
+    <label>ခမည်းတော်အမည်<input type="text" id="fatherName"></label>
+    <label>ပညာအရည်အချင်း<input type="text" id="education"></label>
+    <label>ဖွားရာနေထိုင်ပိုင်နယ်<input type="text" id="birthPlace"></label>
+    <label>ဆက်သွယ်ရန် လိပ်စာ<textarea id="address"></textarea></label>
+  </form>
+
+  <button onclick="generatePDF()">📄 PDF Export</button>
+
+  <script>
+    async function generatePDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      doc.setFont("Helvetica", "normal");
+      doc.setFontSize(14);
+      doc.text("လျှောက်လွှာ ပုံစံ", 105, 20, { align: "center" });
+
+      let y = 40;
+      function addField(label, value) {
+        doc.text(label + " : " + value, 20, y);
+        y += 10;
+      }
+
+      addField("ဘွဲ့တော်", document.getElementById("degree").value);
+      addField("သက္ကရာဇ်", document.getElementById("year").value);
+      addField("ဝမ်းတော်", document.getElementById("father").value);
+      addField("သစ်သနဝင်အမည်", document.getElementById("ordinationName").value);
+      addField("မွေးသက္ကရာဇ်", document.getElementById("birth").value);
+      addField("ဥပဇ္ဈာယ၏ ဘွဲ့တော်", document.getElementById("upaDegree").value);
+      addField("ရဟန်းဖဆင့်သည့် နေရာ", document.getElementById("place").value);
+      addField("ရဟန်းဖဆင့်သည့် သက္ကရာဇ်", document.getElementById("ordinationYear").value);
+      addField("ခမည်းတော်အမည်", document.getElementById("fatherName").value);
+      addField("ပညာအရည်အချင်း", document.getElementById("education").value);
+      addField("ဖွားရာနေထိုင်ပိုင်နယ်", document.getElementById("birthPlace").value);
+      addField("ဆက်သွယ်ရန် လိပ်စာ", document.getElementById("address").value);
+
+      doc.save("application_form.pdf");
+    }
+  </script>
+</body>
+</html>
